@@ -10,6 +10,7 @@ import ReactAutosuggest, {
     ChangeEvent,
     GetSuggestionValue,
     InputProps,
+    OnSuggestionSelected,
     OnSuggestionsClearRequested,
     RenderSuggestionParams,
     RenderSuggestionsContainerParams,
@@ -37,11 +38,23 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
+type GetSuggestionText<TSuggestion> = (suggestion: TSuggestion) => string;
+
 export interface AutosuggestProps<TSuggestion> {
+    // Autosuggest does not have the concept value vs. display text.
+    // getSuggestionText() is a workaround to show the desired text
+    // in the list of suggestions, but still committing the value
+    // to the input box.
+    // See: https://github.com/moroshko/react-autosuggest/issues/247
+    getSuggestionText: GetSuggestionText<TSuggestion>;
+
     getSuggestionValue: GetSuggestionValue<TSuggestion>;
 
     // Called every time the input value changes
     onChange(event: React.FormEvent<any>, params: ChangeEvent): void;
+
+    // Will be called when a suggestion is selected
+    onSuggestionSelected?: OnSuggestionSelected<TSuggestion>;
 
     // Will be called every time you need to recalculate suggestions
     onSuggestionsFetchRequested: SuggestionsFetchRequested;
@@ -57,6 +70,7 @@ export interface AutosuggestProps<TSuggestion> {
 }
 
 export function Autosuggest<TSuggestion>({
+    getSuggestionText,
     getSuggestionValue,
     onChange,
     value,
@@ -96,7 +110,7 @@ export function Autosuggest<TSuggestion>({
         suggestion: TSuggestion,
         { query, isHighlighted }: RenderSuggestionParams
     ) => {
-        const text = getSuggestionValue(suggestion);
+        const text = getSuggestionText(suggestion);
         const matches = match(text, query);
         const parts = parse(text, matches);
 
