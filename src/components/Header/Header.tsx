@@ -3,7 +3,7 @@ import AppBar from '@material-ui/core/AppBar';
 import { makeStyles } from '@material-ui/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { CompanyAutosuggest } from '..';
+import { CompanySelect } from '..';
 
 const useStyles = makeStyles({
     title: {
@@ -23,7 +23,7 @@ export const Header = () => {
                 >
                     Stock Charts
                 </Typography>
-                <CompanyAutosuggest />
+                {<CompanySelect />}
             </Toolbar>
         </AppBar>
     );
