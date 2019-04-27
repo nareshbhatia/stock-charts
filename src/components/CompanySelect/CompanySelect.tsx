@@ -137,6 +137,7 @@ export const CompanySelect = () => {
                 }}
                 isClearable={true}
                 isSearchable={true}
+                noOptionsMessage={() => ''}
                 placeholder="Enter ticker or name"
                 styles={customStyles}
                 onChange={handleChange}
