@@ -4,12 +4,11 @@ import parse from 'autosuggest-highlight/parse';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import { Theme } from '@material-ui/core/styles';
-// import TextField from '@material-ui/core/TextField';
+import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/styles';
 import ReactAutosuggest, {
     ChangeEvent,
     GetSuggestionValue,
-    // InputProps,
     OnSuggestionSelected,
     OnSuggestionsClearRequested,
     RenderSuggestionParams,
@@ -41,6 +40,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 type GetSuggestionText<TSuggestion> = (suggestion: TSuggestion) => string;
 
 export interface AutosuggestProps<TSuggestion> {
+    // Pass-through props to the underlying input component
+    extraInputProps?: object;
+
     // Autosuggest does not have the concept value vs. display text.
     // getSuggestionText() is a workaround to show the desired text
     // in the list of suggestions, but still committing the value
@@ -70,8 +72,8 @@ export interface AutosuggestProps<TSuggestion> {
 }
 
 export function Autosuggest<TSuggestion>({
+    extraInputProps,
     getSuggestionText,
-    getSuggestionValue,
     onChange,
     value,
     ...rest
@@ -81,30 +83,29 @@ export function Autosuggest<TSuggestion>({
     const inputProps = {
         classes,
         onChange,
-        value
+        value,
+        ...extraInputProps
     };
 
-    // const renderInputComponent = <TSuggestion extends {}>(
-    //     inputProps: InputProps<TSuggestion>
-    // ) => {
-    //     const { classes, inputRef = () => {}, ref, ...rest } = inputProps;
-    //
-    //     return (
-    //         <TextField
-    //             fullWidth
-    //             InputProps={{
-    //                 inputRef: node => {
-    //                     ref(node);
-    //                     inputRef(node);
-    //                 },
-    //                 classes: {
-    //                     input: classes.input
-    //                 }
-    //             }}
-    //             {...rest}
-    //         />
-    //     );
-    // };
+    const renderInputComponent = <TSuggestion extends {}>(inputProps: any) => {
+        const { classes, inputRef = () => {}, ref, ...rest } = inputProps;
+
+        return (
+            <TextField
+                fullWidth
+                InputProps={{
+                    inputRef: node => {
+                        ref(node);
+                        inputRef(node);
+                    },
+                    classes: {
+                        input: classes.input
+                    }
+                }}
+                {...rest}
+            />
+        );
+    };
 
     const renderSuggestion = (
         suggestion: TSuggestion,
@@ -147,8 +148,8 @@ export function Autosuggest<TSuggestion>({
 
     return (
         <ReactAutosuggest
-            getSuggestionValue={getSuggestionValue}
             inputProps={inputProps}
+            renderInputComponent={renderInputComponent}
             renderSuggestion={renderSuggestion}
             renderSuggestionsContainer={renderSuggestionsContainer}
             theme={theme}

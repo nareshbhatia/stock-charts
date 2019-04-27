@@ -92,6 +92,10 @@ export const CompanyAutosuggest = () => {
             onSuggestionsClearRequested={handleSuggestionsClearRequested}
             suggestions={suggestions}
             value={value}
+            extraInputProps={{
+                label: 'Ticker',
+                placeholder: 'Enter ticker or name'
+            }}
         />
     );
 };
