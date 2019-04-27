@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
     LineChart,
     Line,
@@ -7,6 +7,7 @@ import {
     Label,
     ResponsiveContainer
 } from 'recharts';
+import { CompanyContext } from '../../contexts';
 
 // Generate Sales Data
 function createData(time: string, amount: number | undefined) {
@@ -26,6 +27,12 @@ const data = [
 ];
 
 export const PriceHistory = () => {
+    const company = useContext(CompanyContext);
+
+    if (!company) {
+        return null;
+    }
+
     return (
         <React.Fragment>
             <ResponsiveContainer>

@@ -1,9 +1,10 @@
-import React, { CSSProperties, useState, useEffect } from 'react';
+import React, { CSSProperties, useState, useEffect, useContext } from 'react';
 import { Theme } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { makeStyles } from '@material-ui/styles';
 import AsyncSelect from 'react-select/lib/Async';
 import { ValueType } from 'react-select/lib/types';
+import { CompanyContext, SetCompanyContext } from '../../contexts';
 import { Company } from '../../models';
 import { CompanyService } from '../../services';
 
@@ -22,9 +23,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const CompanySelect = () => {
     const classes = useStyles();
-
-    // Selected company
-    const [selectedCompany, setSelectedCompany] = useState<Company>();
+    const company = useContext(CompanyContext);
+    const setCompany = useContext(SetCompanyContext);
 
     // List of all companies
     const [companies, setCompanies] = useState<Company[]>([]);
@@ -48,7 +48,7 @@ export const CompanySelect = () => {
 
     // Called whenever selection changes
     const handleChange = (value: ValueType<Company>) => {
-        setSelectedCompany(value as Company);
+        setCompany(value as Company);
     };
 
     const customStyles = {
@@ -127,7 +127,7 @@ export const CompanySelect = () => {
     return (
         <div className={classes.root}>
             <AsyncSelect
-                value={selectedCompany}
+                value={company}
                 loadOptions={loadOptions}
                 getOptionValue={option => option.ticker}
                 getOptionLabel={option => `${option.ticker} - ${option.name}`}
@@ -137,7 +137,7 @@ export const CompanySelect = () => {
                 }}
                 isClearable={true}
                 isSearchable={true}
-                noOptionsMessage={() => ''}
+                noOptionsMessage={() => 'Enter ticker or name'}
                 placeholder="Enter ticker or name"
                 styles={customStyles}
                 onChange={handleChange}
