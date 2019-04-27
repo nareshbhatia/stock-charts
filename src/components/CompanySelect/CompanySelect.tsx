@@ -1,10 +1,28 @@
 import React, { CSSProperties, useState, useEffect } from 'react';
+import { Theme } from '@material-ui/core/styles';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import { makeStyles } from '@material-ui/styles';
 import AsyncSelect from 'react-select/lib/Async';
 import { ValueType } from 'react-select/lib/types';
 import { Company } from '../../models';
 import { CompanyService } from '../../services';
 
+const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+        width: 300,
+        fontFamily: theme.typography.fontFamily,
+        marginLeft: theme.spacing(1),
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.white, 0.25)
+        }
+    }
+}));
+
 export const CompanySelect = () => {
+    const classes = useStyles();
+
     // Selected company
     const [selectedCompany, setSelectedCompany] = useState<Company>();
 
@@ -33,15 +51,48 @@ export const CompanySelect = () => {
         setSelectedCompany(value as Company);
     };
 
-    // TODO: How to style this component?
-    const selectStyles = {
-        input: (base: CSSProperties) => ({
-            ...base,
-            // color: theme.palette.text.primary,
-            width: 200,
-            '& input': {
-                font: 'inherit'
-            }
+    const customStyles = {
+        control: (provided: CSSProperties) => ({
+            ...provided,
+            background: 'none',
+            border: 'none',
+            minHeight: '34px'
+        }),
+        input: (provided: CSSProperties) => ({
+            ...provided,
+            color: 'inherit',
+            fontSize: '16px'
+        }),
+        placeholder: (provided: CSSProperties) => ({
+            ...provided,
+            color: 'rgba(255, 255, 255, .5)',
+            fontSize: '16px'
+        }),
+        singleValue: (provided: CSSProperties) => ({
+            ...provided,
+            color: 'inherit',
+            fontSize: '16px'
+        }),
+        clearIndicator: (provided: CSSProperties) => ({
+            ...provided,
+            color: 'inherit'
+        }),
+        option: (
+            provided: CSSProperties,
+            { isDisabled, isFocused, isSelected }: any
+        ) => ({
+            ...provided,
+            color: isFocused ? 'white' : isSelected ? 'white' : 'black',
+            backgroundColor: isFocused
+                ? '#408eeb'
+                : isSelected
+                ? '#28a745'
+                : 'white',
+            '&:hover': {
+                color: 'white',
+                backgroundColor: '#408eeb'
+            },
+            fontSize: '16px'
         })
     };
 
@@ -74,17 +125,22 @@ export const CompanySelect = () => {
         Promise.resolve(filterCompanies(inputValue));
 
     return (
-        <React.Fragment>
+        <div className={classes.root}>
             <AsyncSelect
                 value={selectedCompany}
                 loadOptions={loadOptions}
                 getOptionValue={option => option.ticker}
                 getOptionLabel={option => `${option.ticker} - ${option.name}`}
+                components={{
+                    DropdownIndicator: () => null,
+                    IndicatorSeparator: () => null
+                }}
                 isClearable={true}
                 isSearchable={true}
-                styles={selectStyles}
+                placeholder="Enter ticker or name"
+                styles={customStyles}
                 onChange={handleChange}
             />
-        </React.Fragment>
+        </div>
     );
 };
