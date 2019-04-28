@@ -32,7 +32,7 @@ export const CompanySelect = () => {
     // Get the list of all companies
     useEffect(() => {
         async function fetchData() {
-            const companies = await CompanyService.getCompanies();
+            const companies = await CompanyService.fetchCompanies();
 
             // Sort by ticker
             companies.sort((a, b) => {

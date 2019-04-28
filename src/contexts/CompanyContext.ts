@@ -3,7 +3,7 @@ import { Company } from '../models';
 
 export const CompanyContext = React.createContext<Company | undefined>({
     ticker: 'AAPL',
-    name: 'Apple, Inc.'
+    name: 'Apple Inc.'
 });
 
 type SetCompany = (company: Company) => void;

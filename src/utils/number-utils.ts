@@ -10,6 +10,38 @@ export function numberToMoney(value: number) {
 }
 
 /**
+ * Formats value as a comma-separated number with optional decimal digits
+ * Examples:
+ *     1000 --> 1,000
+ *     1000.00 --> 1,000.00
+ * @param value
+ */
+export function formatWithCommas(value: number) {
+    return numeral(value).format('0,0.[0000]');
+}
+
+/**
+ * Formats value with plus of minus sign
+ * Examples:
+ *      1 --> '+1'
+ *     -1 --> '-1'
+ * @param value
+ */
+export function formatWithSign(value: number) {
+    return numeral(value).format('+0.[0000]');
+}
+
+/**
+ * Formats value as an abbreviation
+ * Examples:
+ *     100000 --> 100k
+ * @param value
+ */
+export function formatWithAbbreviation(value: number) {
+    return numeral(value).format('0a');
+}
+
+/**
  * Tries to convert strings in various formats to a number
  * Examples:
  *     '10,000.12'  --> 10000.12

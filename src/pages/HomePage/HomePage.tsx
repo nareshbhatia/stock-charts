@@ -5,8 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import { Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
 import { FullHeightContainer, Header } from '../../components';
-import { CompanyProfile } from './CompanyProfile';
-import { PriceHistory } from './PriceHistory';
+import { CompanyProfileView } from './CompanyProfileView';
+import { PriceHistoryChart } from './PriceHistoryChart';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         overflow: 'auto',
         flexDirection: 'column',
-        height: 300
+        minHeight: 300
     }
 }));
 
@@ -32,12 +32,12 @@ export const HomePage = () => {
                 <Grid container spacing={3}>
                     <Grid item xs={5}>
                         <Paper className={classes.paper}>
-                            <CompanyProfile />
+                            <CompanyProfileView />
                         </Paper>
                     </Grid>
                     <Grid item xs={7}>
                         <Paper className={classes.paper}>
-                            <PriceHistory />
+                            <PriceHistoryChart />
                         </Paper>
                     </Grid>
                 </Grid>

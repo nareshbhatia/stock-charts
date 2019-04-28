@@ -21,7 +21,7 @@ export const CompanyAutosuggest = () => {
     // Get the list of all companies
     useEffect(() => {
         async function fetchData() {
-            const companies = await CompanyService.getCompanies();
+            const companies = await CompanyService.fetchCompanies();
             setCompanies(companies);
         }
 

@@ -26,7 +26,7 @@ const data = [
     createData('24:00', undefined)
 ];
 
-export const PriceHistory = () => {
+export const PriceHistoryChart = () => {
     const company = useContext(CompanyContext);
 
     if (!company) {
