@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
+import classNames from 'classnames';
 import { FullHeightContainer, Header } from '../../components';
 import { CompanyProfileView } from './CompanyProfileView';
 import { PriceHistoryChart } from './PriceHistoryChart';
@@ -18,12 +19,17 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         overflow: 'auto',
         flexDirection: 'column',
-        minHeight: 300
+        minHeight: 500
+    },
+    chartPanel: {
+        height: 500
     }
 }));
 
 export const HomePage = () => {
     const classes = useStyles();
+    const chartPanelClass = classNames(classes.paper, classes.chartPanel);
+
     return (
         <FullHeightContainer>
             <Header />
@@ -36,7 +42,7 @@ export const HomePage = () => {
                         </Paper>
                     </Grid>
                     <Grid item xs={7}>
-                        <Paper className={classes.paper}>
+                        <Paper className={chartPanelClass}>
                             <PriceHistoryChart />
                         </Paper>
                     </Grid>

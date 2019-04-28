@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     LineChart,
     Line,
@@ -8,28 +8,32 @@ import {
     ResponsiveContainer
 } from 'recharts';
 import { CompanyContext } from '../../contexts';
-
-// Generate Sales Data
-function createData(time: string, amount: number | undefined) {
-    return { time, amount };
-}
-
-const data = [
-    createData('00:00', 0),
-    createData('03:00', 300),
-    createData('06:00', 600),
-    createData('09:00', 800),
-    createData('12:00', 1500),
-    createData('15:00', 2000),
-    createData('18:00', 2400),
-    createData('21:00', 2400),
-    createData('24:00', undefined)
-];
+import { PriceHistory } from '../../models';
+import { CompanyService } from '../../services';
 
 export const PriceHistoryChart = () => {
     const company = useContext(CompanyContext);
 
-    if (!company) {
+    // Price history
+    const [priceHistory, setPriceHistory] = useState<PriceHistory>();
+
+    // Get the price history
+    useEffect(() => {
+        async function fetchData() {
+            if (!company) {
+                return null;
+            }
+
+            const priceHistory = await CompanyService.fetchPriceHistory(
+                company.ticker
+            );
+            setPriceHistory(priceHistory);
+        }
+
+        fetchData();
+    }, [company]);
+
+    if (!priceHistory) {
         return null;
     }
 
@@ -37,7 +41,7 @@ export const PriceHistoryChart = () => {
         <React.Fragment>
             <ResponsiveContainer>
                 <LineChart
-                    data={data}
+                    data={priceHistory.prices}
                     margin={{
                         top: 16,
                         right: 16,
@@ -45,19 +49,19 @@ export const PriceHistoryChart = () => {
                         left: 24
                     }}
                 >
-                    <XAxis dataKey="time" />
+                    <XAxis dataKey="date" />
                     <YAxis>
                         <Label
                             angle={270}
                             position="left"
                             style={{ textAnchor: 'middle' }}
                         >
-                            Sales ($)
+                            Price
                         </Label>
                     </YAxis>
                     <Line
                         type="monotone"
-                        dataKey="amount"
+                        dataKey="close"
                         stroke="#556CD6"
                         dot={false}
                     />

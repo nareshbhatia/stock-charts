@@ -19,7 +19,6 @@
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
-    "js-joda": "^1.10.1",
     "numeral": "^2.0.6",
     "react": "^16.8.6",
     "react-autosuggest": "^9.4.3",

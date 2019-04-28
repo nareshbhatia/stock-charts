@@ -1,7 +1,5 @@
-import { LocalDate } from 'js-joda';
-
 export interface StockPrice {
-    date: LocalDate;
+    date: Date;
     close: number;
 }
 

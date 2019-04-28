@@ -15,10 +15,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     description: {
         marginBottom: theme.spacing(2)
-    },
-    attribute: {
-        marginBottom: theme.spacing(2),
-        fontSize: '0.8rem'
     }
 }));
 
@@ -26,7 +22,7 @@ export const CompanyProfileView = () => {
     const classes = useStyles();
     const company = useContext(CompanyContext);
 
-    // List of all companies
+    // Company profile
     const [profile, setProfile] = useState<CompanyProfile>();
 
     // Get the company profile
@@ -50,6 +46,7 @@ export const CompanyProfileView = () => {
     }
 
     const {
+        ticker,
         name,
         beta,
         ceo,
@@ -70,7 +67,7 @@ export const CompanyProfileView = () => {
     return (
         <React.Fragment>
             <Typography component="h1" variant="h6">
-                {name}
+                {name} ({ticker})
             </Typography>
             <Typography className={classes.subtitle} color="textSecondary">
                 {sector} - {industry}
