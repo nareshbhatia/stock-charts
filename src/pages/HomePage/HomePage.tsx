@@ -19,10 +19,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         overflow: 'auto',
         flexDirection: 'column',
-        minHeight: 500
+        minHeight: 400
     },
     chartPanel: {
-        height: 500
+        height: 400
     }
 }));
 

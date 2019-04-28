@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import moment from 'moment';
+import Box from '@material-ui/core/Box';
 import {
     LineChart,
     Line,
@@ -8,9 +8,11 @@ import {
     Label,
     ResponsiveContainer
 } from 'recharts';
+import { TimePeriodSelector } from '../../components';
 import { CompanyContext } from '../../contexts';
-import { PriceHistory } from '../../models';
+import { PriceHistory, StockPrice } from '../../models';
 import { CompanyService } from '../../services';
+import { formatTime, getDateRange, TimePeriods } from '../../utils';
 
 const CustomTick = ({ x, y, payload }: any) => (
     <g transform={`translate(${x},${y})`}>
@@ -22,7 +24,7 @@ const CustomTick = ({ x, y, payload }: any) => (
             fill="#666"
             transform="rotate(-35)"
         >
-            {moment(payload.value).format('YYYY-MM-DD')}
+            {formatTime(payload.value)}
         </text>
     </g>
 );
@@ -32,6 +34,7 @@ export const PriceHistoryChart = () => {
 
     // Price history
     const [priceHistory, setPriceHistory] = useState<PriceHistory>();
+    const [period, setPeriod] = useState(TimePeriods.oneMonth.id);
 
     // Get the price history
     useEffect(() => {
@@ -53,16 +56,37 @@ export const PriceHistoryChart = () => {
         return null;
     }
 
+    const filterPrices = (prices: Array<StockPrice>, period: string) => {
+        const range = getDateRange(new Date(), period);
+        if (!range) {
+            return prices;
+        }
+
+        const start = range.startDate.getTime();
+        const end = range.endDate.getTime();
+        return prices.filter(price => price.time >= start && price.time <= end);
+    };
+
+    const prices = filterPrices(priceHistory.prices, period);
+
     return (
         <React.Fragment>
+            <Box display="flex" justifyContent="center">
+                <TimePeriodSelector
+                    value={period}
+                    onChange={(event, value) => {
+                        setPeriod(value);
+                    }}
+                />
+            </Box>
             <ResponsiveContainer>
                 <LineChart
-                    data={priceHistory.prices}
+                    data={prices}
                     margin={{
-                        top: 16,
+                        top: 32,
                         right: 16,
                         bottom: 32,
-                        left: 24
+                        left: 16
                     }}
                 >
                     <XAxis
