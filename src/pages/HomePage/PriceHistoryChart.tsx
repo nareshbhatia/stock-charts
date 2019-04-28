@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import moment from 'moment';
 import {
     LineChart,
     Line,
@@ -10,6 +11,21 @@ import {
 import { CompanyContext } from '../../contexts';
 import { PriceHistory } from '../../models';
 import { CompanyService } from '../../services';
+
+const CustomTick = ({ x, y, payload }: any) => (
+    <g transform={`translate(${x},${y})`}>
+        <text
+            x={0}
+            y={0}
+            dy={16}
+            textAnchor="end"
+            fill="#666"
+            transform="rotate(-35)"
+        >
+            {moment(payload.value).format('YYYY-MM-DD')}
+        </text>
+    </g>
+);
 
 export const PriceHistoryChart = () => {
     const company = useContext(CompanyContext);
@@ -45,11 +61,17 @@ export const PriceHistoryChart = () => {
                     margin={{
                         top: 16,
                         right: 16,
-                        bottom: 0,
+                        bottom: 32,
                         left: 24
                     }}
                 >
-                    <XAxis dataKey="date" />
+                    <XAxis
+                        dataKey="time"
+                        type="number"
+                        domain={['dataMin', 'dataMax']}
+                        scale="time"
+                        tick={<CustomTick />}
+                    />
                     <YAxis>
                         <Label
                             angle={270}
@@ -62,7 +84,7 @@ export const PriceHistoryChart = () => {
                     <Line
                         type="monotone"
                         dataKey="close"
-                        stroke="#556CD6"
+                        stroke="#1277eb"
                         dot={false}
                     />
                 </LineChart>

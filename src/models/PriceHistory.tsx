@@ -1,5 +1,6 @@
 export interface StockPrice {
-    date: Date;
+    // millis since Unix Epoch
+    time: number;
     close: number;
 }
 

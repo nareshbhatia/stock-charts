@@ -47,7 +47,7 @@ const mapProfileToDomain = (ticker: string, profile: any): CompanyProfile => {
  */
 const mapPricesToDomain = (prices: Array<any>): Array<StockPrice> => {
     return prices.map(price => ({
-        date: new Date(price.date),
+        time: new Date(price.date).getTime(),
         close: price.close
     }));
 };
