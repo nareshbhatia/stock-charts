@@ -32,7 +32,6 @@
     "@types/autosuggest-highlight": "^3.1.0",
     "@types/classnames": "^2.2.7",
     "@types/jest": "24.0.11",
-    "@types/moment": "^2.13.0",
     "@types/node": "11.13.7",
     "@types/numeral": "^0.0.25",
     "@types/react": "16.8.14",
