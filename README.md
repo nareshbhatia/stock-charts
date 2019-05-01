@@ -19,3 +19,11 @@ $ yarn start
 ```
 
 Now point your browser to http://localhost:3000/.
+
+## Test
+
+Execute the following command to run all tests and show test coverage.
+
+```bash
+yarn test --watchAll=false --coverage
+```

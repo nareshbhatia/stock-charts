@@ -1,6 +1,21 @@
-import { formatDateUtc, getDateRange, TimePeriods } from './date-utils';
+import {
+    formatDateUtc,
+    formatTimeUtc,
+    getDateRange,
+    TimePeriods
+} from './date-utils';
 
 const refDate = new Date('2019-04-15');
+
+describe('Formatting dates and times', () => {
+    test('formatDateUtc() formats a Date object as YYYY-MM-DD in UTC', () => {
+        expect(formatDateUtc(refDate)).toBe('2019-04-15');
+    });
+
+    test('formatTimeUtc() formats time in millis as YYYY-MM-DD in UTC', () => {
+        expect(formatTimeUtc(refDate.getTime())).toBe('2019-04-15');
+    });
+});
 
 describe('getDateRange()', () => {
     test('oneMonth returns the expected range', () => {

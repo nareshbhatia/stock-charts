@@ -12,7 +12,7 @@ import { TimePeriodSelector } from '../../components';
 import { CompanyContext } from '../../contexts';
 import { PriceHistory, StockPrice } from '../../models';
 import { CompanyService } from '../../services';
-import { formatTime, getDateRange, TimePeriods } from '../../utils';
+import { formatTimeUtc, getDateRange, TimePeriods } from '../../utils';
 
 const CustomTick = ({ x, y, payload }: any) => (
     <g transform={`translate(${x},${y})`}>
@@ -24,7 +24,7 @@ const CustomTick = ({ x, y, payload }: any) => (
             fill="#666"
             transform="rotate(-35)"
         >
-            {formatTime(payload.value)}
+            {formatTimeUtc(payload.value)}
         </text>
     </g>
 );

@@ -1,13 +1,25 @@
 import moment from 'moment';
 
+/**
+ * Formats a Date object as YYYY-MM-DD in UTC
+ * Example: 2019-04-15T00:00:00Z will be formatted as 2019-04-15
+ * @param date
+ */
 export function formatDateUtc(date: Date) {
     return moment(date)
         .utc()
         .format('YYYY-MM-DD');
 }
 
-export function formatTime(time: number) {
-    return moment(time).format('YYYY-MM-DD');
+/**
+ * Formats time in millis since Unix Epoch as YYYY-MM-DD in UTC
+ * Example: millis equivalent to 2019-04-15T00:00:00Z will be formatted as 2019-04-15
+ * @param time
+ */
+export function formatTimeUtc(time: number) {
+    return moment(time)
+        .utc()
+        .format('YYYY-MM-DD');
 }
 
 /**
@@ -72,10 +84,6 @@ export function getDateRange(
     refDate: Date,
     timePeriod: string
 ): DateRange | null {
-    if (timePeriod === TimePeriods.max.id) {
-        return null;
-    }
-
     let startDate;
     const refMoment = moment(refDate);
 
@@ -97,9 +105,7 @@ export function getDateRange(
             break;
 
         default:
-            // should not happen
-            startDate = refDate;
-            break;
+            return null;
     }
 
     return {
