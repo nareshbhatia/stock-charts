@@ -17,6 +17,10 @@ export class ErrorBoundary extends React.Component<
     ErrorBoundaryProps,
     ErrorBoundaryState
 > {
+    state: ErrorBoundaryState = {
+        hasError: false
+    };
+
     static getDerivedStateFromError(error: Error | string) {
         // Update state so the next render will show the fallback UI
         return {
@@ -24,10 +28,6 @@ export class ErrorBoundary extends React.Component<
             message: extractMessage(error)
         };
     }
-
-    state: ErrorBoundaryState = {
-        hasError: false
-    };
 
     componentDidCatch(error: Error | string, errorInfo: React.ErrorInfo) {
         // Log the error to an error reporting service

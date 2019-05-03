@@ -6,7 +6,7 @@ import AsyncSelect from 'react-select/lib/Async';
 import { ValueType } from 'react-select/lib/types';
 import { CompanyContext, SetCompanyContext } from '../../contexts';
 import { Company } from '../../models';
-import { CompanyService } from '../../services';
+import { useCompanyList } from './useCompanyList';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -27,29 +27,7 @@ export const CompanySelect = () => {
     const setCompany = useContext(SetCompanyContext);
 
     // List of all companies
-    const [companies, setCompanies] = useState<Company[]>([]);
-
-    // Get the list of all companies
-    useEffect(() => {
-        async function fetchData() {
-            const companies = await CompanyService.fetchCompanies();
-
-            // Sort by ticker
-            companies.sort((a, b) => {
-                if (a.ticker < b.ticker) return -1;
-                if (a.ticker > b.ticker) return 1;
-                return 0;
-            });
-            setCompanies(companies);
-        }
-
-        fetchData();
-    }, []);
-
-    // Called whenever selection changes
-    const handleChange = (value: ValueType<Company>) => {
-        setCompany(value as Company);
-    };
+    const { companies } = useCompanyList();
 
     const customStyles = {
         control: (provided: CSSProperties) => ({
@@ -123,6 +101,11 @@ export const CompanySelect = () => {
 
     const loadOptions = (inputValue: string) =>
         Promise.resolve(filterCompanies(inputValue));
+
+    // Called whenever selection changes
+    const handleChange = (value: ValueType<Company>) => {
+        setCompany(value as Company);
+    };
 
     return (
         <div className={classes.root}>
