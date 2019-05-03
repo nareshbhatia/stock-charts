@@ -1,4 +1,6 @@
 import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import { PageCenteredContainer } from '..';
 
 export interface ErrorBoundaryProps {
     children: React.ReactNode;
@@ -37,7 +39,13 @@ export class ErrorBoundary extends React.Component<
 
     render() {
         if (this.state.error) {
-            return <h1>{extractMessage(this.state.error)}</h1>;
+            return (
+                <PageCenteredContainer dark={true}>
+                    <Typography component="h1" variant="h3">
+                        {extractMessage(this.state.error)}
+                    </Typography>
+                </PageCenteredContainer>
+            );
         }
 
         return this.props.children;
