@@ -5,12 +5,11 @@ export interface ErrorBoundaryProps {
 }
 
 export interface ErrorBoundaryState {
-    hasError: boolean;
-    message?: string;
+    error: any;
 }
 
-function extractMessage(error: Error | string = 'Something went wrong') {
-    return error instanceof Error ? error.message : error;
+function extractMessage(error: any) {
+    return error instanceof Error ? error.message : 'Something went wrong';
 }
 
 export class ErrorBoundary extends React.Component<
@@ -18,18 +17,17 @@ export class ErrorBoundary extends React.Component<
     ErrorBoundaryState
 > {
     state: ErrorBoundaryState = {
-        hasError: false
+        error: null
     };
 
-    static getDerivedStateFromError(error: Error | string) {
+    static getDerivedStateFromError(error: any) {
         // Update state so the next render will show the fallback UI
         return {
-            hasError: true,
-            message: extractMessage(error)
+            error
         };
     }
 
-    componentDidCatch(error: Error | string, errorInfo: React.ErrorInfo) {
+    componentDidCatch(error: any, errorInfo: React.ErrorInfo) {
         // Log the error to an error reporting service
         // logErrorToMyService(error, info);
         console.error(
@@ -38,8 +36,8 @@ export class ErrorBoundary extends React.Component<
     }
 
     render() {
-        if (this.state.hasError) {
-            return <h1>{this.state.message}</h1>;
+        if (this.state.error) {
+            return <h1>{extractMessage(this.state.error)}</h1>;
         }
 
         return this.props.children;
