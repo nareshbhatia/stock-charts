@@ -8,7 +8,7 @@ import {
     Label,
     ResponsiveContainer
 } from 'recharts';
-import { TimePeriodSelector } from '../../components';
+import { TimePeriodSelector } from '..';
 import { CompanyContext } from '../../contexts';
 import { PriceHistory, StockPrice } from '../../models';
 import { CompanyService } from '../../services';

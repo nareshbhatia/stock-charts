@@ -32,7 +32,7 @@ export const useCompanyList = (): {
         fetchData();
     }, []);
 
-    // Allow ErrorBoundary handle errors
+    // Allow ErrorBoundary to handle errors
     if (error) {
         throw error;
     }

@@ -5,9 +5,12 @@ import Paper from '@material-ui/core/Paper';
 import { Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
-import { FullHeightContainer, Header } from '../../components';
-import { CompanyProfileView } from './CompanyProfileView';
-import { PriceHistoryChart } from './PriceHistoryChart';
+import {
+    CompanyProfileView,
+    FullHeightContainer,
+    Header,
+    PriceHistoryChart
+} from '../../components';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {

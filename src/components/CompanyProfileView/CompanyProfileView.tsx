@@ -3,7 +3,7 @@ import Link from '@material-ui/core/Link';
 import { Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/styles';
-import { Attribute } from '../../components';
+import { Attribute } from '..';
 import { CompanyContext } from '../../contexts';
 import { CompanyProfile } from '../../models';
 import { CompanyService } from '../../services';
