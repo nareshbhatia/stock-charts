@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import {
     LineChart,
@@ -10,9 +10,9 @@ import {
 } from 'recharts';
 import { TimePeriodSelector } from '..';
 import { CompanyContext } from '../../contexts';
-import { PriceHistory, StockPrice } from '../../models';
-import { CompanyService } from '../../services';
+import { StockPrice } from '../../models';
 import { formatTimeUtc, getDateRange, TimePeriods } from '../../utils';
+import { usePriceHistory } from './usePriceHstory';
 
 const CustomTick = ({ x, y, payload }: any) => (
     <g transform={`translate(${x},${y})`}>
@@ -33,24 +33,10 @@ export const PriceHistoryChart = () => {
     const company = useContext(CompanyContext);
 
     // Price history
-    const [priceHistory, setPriceHistory] = useState<PriceHistory>();
+    const { priceHistory } = usePriceHistory(
+        company ? company.ticker : undefined
+    );
     const [period, setPeriod] = useState(TimePeriods.oneMonth.id);
-
-    // Get the price history
-    useEffect(() => {
-        async function fetchData() {
-            if (!company) {
-                return null;
-            }
-
-            const priceHistory = await CompanyService.fetchPriceHistory(
-                company.ticker
-            );
-            setPriceHistory(priceHistory);
-        }
-
-        fetchData();
-    }, [company]);
 
     if (!priceHistory) {
         return null;

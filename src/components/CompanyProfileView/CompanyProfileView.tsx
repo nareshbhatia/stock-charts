@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import Link from '@material-ui/core/Link';
 import { Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/styles';
 import { Attribute } from '..';
 import { CompanyContext } from '../../contexts';
-import { CompanyProfile } from '../../models';
-import { CompanyService } from '../../services';
 import { formatWithAbbreviation, formatWithSign } from '../../utils';
+import { useCompanyProfile } from './useCompanyProfile';
 
 const useStyles = makeStyles((theme: Theme) => ({
     subtitle: {
@@ -23,23 +22,7 @@ export const CompanyProfileView = () => {
     const company = useContext(CompanyContext);
 
     // Company profile
-    const [profile, setProfile] = useState<CompanyProfile>();
-
-    // Get the company profile
-    useEffect(() => {
-        async function fetchData() {
-            if (!company) {
-                return null;
-            }
-
-            const profile = await CompanyService.fetchCompanyProfile(
-                company.ticker
-            );
-            setProfile(profile);
-        }
-
-        fetchData();
-    }, [company]);
+    const { profile } = useCompanyProfile(company ? company.ticker : undefined);
 
     if (!profile) {
         return null;
