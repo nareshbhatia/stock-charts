@@ -11,11 +11,12 @@ export function numberToMoney(value: number) {
 
 /**
  * Formats value as a comma-separated number with optional decimal digits
+ * Decimal digits with zero value will be truncated
  * Examples:
  *     1000 --> 1,000
- *     1000.00 --> 1,000.00       <--- not working
+ *     1000.00 --> 1,000.00
  *     1000.01 --> 1,000.01
- *     1000.0000 --> 1,000.0000   <--- not working
+ *     1000.0000 --> 1,000.0000
  *     1000.0001 --> 1,000.0001
  * @param value
  */

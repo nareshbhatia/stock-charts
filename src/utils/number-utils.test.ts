@@ -12,9 +12,9 @@ test('numberToMoney() formats value as a comma-separated number with 2 decimal d
 
 test('formatWithCommas() formats value as a comma-separated number with optional decimal digits', () => {
     expect(formatWithCommas(1000)).toBe('1,000');
-    // expect(formatWithCommas(1000.00)).toBe('1,000.00');
+    expect(formatWithCommas(1000.00)).toBe('1,000');
     expect(formatWithCommas(1000.01)).toBe('1,000.01');
-    // expect(formatWithCommas(1000.0000)).toBe('1,000.0000');
+    expect(formatWithCommas(1000.0000)).toBe('1,000');
     expect(formatWithCommas(1000.0001)).toBe('1,000.0001');
 });
 
