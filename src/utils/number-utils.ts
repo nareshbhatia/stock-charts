@@ -13,7 +13,10 @@ export function numberToMoney(value: number) {
  * Formats value as a comma-separated number with optional decimal digits
  * Examples:
  *     1000 --> 1,000
- *     1000.00 --> 1,000.00
+ *     1000.00 --> 1,000.00       <--- not working
+ *     1000.01 --> 1,000.01
+ *     1000.0000 --> 1,000.0000   <--- not working
+ *     1000.0001 --> 1,000.0001
  * @param value
  */
 export function formatWithCommas(value: number) {
@@ -50,7 +53,6 @@ export function formatWithAbbreviation(value: number) {
  *     '100B'       --> 100
  *     '3.467TB'    --> 3467000000000
  *     '-76%'       --> -0.76
- *     '2:23:57'    --> NaN
  * @param value
  */
 export function stringToNumber(value: string) {
