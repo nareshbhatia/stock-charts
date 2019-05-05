@@ -24,6 +24,7 @@ export const usePriceHistory = (
                     ticker
                 );
                 setPriceHistory(priceHistory);
+                setLoading(false);
             } catch (e) {
                 setError(e);
             }

@@ -24,6 +24,7 @@ export const useCompanyProfile = (
                     ticker
                 );
                 setProfile(profile);
+                setLoading(false);
             } catch (e) {
                 setError(e);
             }
