@@ -5,6 +5,7 @@ export * from './CompanyProfileView';
 export * from './CompanySelect';
 export * from './Containers';
 export * from './ErrorBoundary';
+export * from './ErrorMessage';
 export * from './Header';
 export * from './Loading';
 export * from './PriceHistoryChart';
