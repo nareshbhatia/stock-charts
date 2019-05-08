@@ -2,9 +2,6 @@ import React from 'react';
 import { render } from 'test-utils';
 import { ErrorBoundary } from './ErrorBoundary';
 
-const goodBoyText = 'I am a good boy';
-const badBoyText = 'I am a bad boy';
-
 beforeEach(() => {
     // When an error is thrown a bunch of console.errors are called even though
     // the error boundary handles the error. This makes the test output noisy,
@@ -16,22 +13,30 @@ afterEach(() => {
     console.error.mockRestore();
 });
 
-const GoodBoy = () => {
-    return <div>{goodBoyText}</div>;
-};
+const goodBoyText = 'I am a good boy';
+const badBoyText = 'I am a bad boy';
 
-const BadBoy = () => {
-    throw new Error(badBoyText);
+interface ChildProps {
+    shouldThrow?: boolean;
+}
+
+const Child = ({ shouldThrow }: ChildProps) => {
+    if (shouldThrow) {
+        throw new Error(badBoyText);
+    } else {
+        return <div>{goodBoyText}</div>;
+    }
 };
 
 describe('<ErrorBoundary />', () => {
     it('renders its child when there is no error', () => {
-        const { getByText } = render(
+        const { queryByText } = render(
             <ErrorBoundary>
-                <GoodBoy />
+                <Child />
             </ErrorBoundary>
         );
-        expect(getByText(goodBoyText)).toBeInTheDocument();
+        expect(queryByText(goodBoyText)).toBeInTheDocument();
+        expect(queryByText(badBoyText)).not.toBeInTheDocument();
 
         // By mocking out console.error we may inadvertently miss out on
         // logs due to real errors. Let's reduce that likelihood by adding
@@ -40,12 +45,13 @@ describe('<ErrorBoundary />', () => {
     });
 
     it('renders the fallback UI when the child throws an error', () => {
-        const { getByText } = render(
+        const { queryByText } = render(
             <ErrorBoundary>
-                <BadBoy />
+                <Child shouldThrow={true} />
             </ErrorBoundary>
         );
-        expect(getByText(badBoyText)).toBeInTheDocument();
+        expect(queryByText(goodBoyText)).not.toBeInTheDocument();
+        expect(queryByText(badBoyText)).toBeInTheDocument();
         expect(console.error).toHaveBeenCalledTimes(2);
     });
 });

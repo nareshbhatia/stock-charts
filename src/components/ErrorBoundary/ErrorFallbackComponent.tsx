@@ -10,7 +10,7 @@ export interface ErrorFallbackComponentProps {
 export const ErrorFallbackComponent = ({
     error
 }: ErrorFallbackComponentProps) => (
-    <PageCenteredContainer data-testid="error-fallback-ui" dark={true}>
+    <PageCenteredContainer dark={true}>
         <Typography component="h1" variant="h3">
             {errorToString(error)}
         </Typography>
