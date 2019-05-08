@@ -9,3 +9,4 @@ export * from './Header';
 export * from './Loading';
 export * from './PriceHistoryChart';
 export * from './TimePeriodSelector';
+export * from './withMui';

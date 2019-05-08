@@ -39,8 +39,10 @@
     "@types/react-dom": "16.8.4",
     "@types/react-select": "^2.0.17",
     "@types/recharts": "^1.1.16",
+    "jest-dom": "^3.2.1",
     "prettier": "^1.17.0",
     "react-scripts": "3.0.0",
+    "react-testing-library": "^7.0.0",
     "typescript": "3.4.4"
   },
   "eslintConfig": {

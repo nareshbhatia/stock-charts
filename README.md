@@ -22,6 +22,12 @@ Now point your browser to http://localhost:3000/.
 
 ## Test
 
+Execute the following command to run tests in interactive mode:
+
+```bash
+yarn test
+```
+
 Execute the following command to run all tests and show test coverage.
 
 ```bash
