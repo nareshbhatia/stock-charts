@@ -3,9 +3,8 @@ import { ErrorBoundary, Loading } from './components';
 import { CompanyContext, SetCompanyContext } from './contexts';
 import { Company } from './models';
 import { HomePage } from './pages';
-import { withMui } from './components';
 
-export const App: React.FC = withMui(() => {
+export const App: React.FC = () => {
     // The company in context
     const [company, setCompany] = useState<Company>({
         ticker: 'AAPL',
@@ -23,4 +22,4 @@ export const App: React.FC = withMui(() => {
             </Suspense>
         </ErrorBoundary>
     );
-});
+};
