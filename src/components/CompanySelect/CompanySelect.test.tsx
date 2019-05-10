@@ -37,9 +37,12 @@ jest.mock('./useCompanyList', () => {
 
 describe('<CompanySelect />', () => {
     it('allows user to select a company', async () => {
-        const { debug, container, getByText } = render(<CompanySelect />);
+        const { container, getByText } = render(<CompanySelect />);
 
-        // Focus on the input element
+        const targetCompany = 'GOOG - Alphabet Inc.';
+
+        // Type a 'g' into the input element to show options
+        // (simulate using a change event - focus and keyboard events don't work well)
         let selectInput: any;
         await waitForElement(
             () =>
@@ -47,37 +50,24 @@ describe('<CompanySelect />', () => {
                     '.react-select__input input'
                 ))
         );
-        fireEvent.focus(selectInput);
+        fireEvent.change(selectInput, { target: { value: 'g' } });
 
-        // Mouse down on select control to open the menu
-        // The menu simply shows the no-options notice: "Enter ticker or name"
-        let selectControl: any;
-        await waitForElement(
-            () =>
-                (selectControl = container.querySelector(
-                    '.react-select__control'
-                ))
-        );
-        fireEvent.mouseDown(selectControl);
-
-        // Type into the input to start showing options
-        fireEvent.keyDown(selectInput, { key: 'g', code: 71, charCode: 71 });
-        debug();
-
-        // --------------------------------------------------------------------
-        // Expected menu options don't show up at this point, getByText() fails
-        // --------------------------------------------------------------------
+        // Click on the GOOG option
         let selectMenu: any;
         await waitForElement(
-            () =>
-                (selectMenu = container.querySelector(
-                    '.react-select__menu'
-                ))
+            () => (selectMenu = container.querySelector('.react-select__menu'))
         );
-        const option = getByText('GOOG - Alphabet Inc.');
+        const option = getByText(targetCompany);
         fireEvent.click(option);
 
-        // TODO: How to mock handleOnChange? It is not exposed by the component.
-        // expect(handleOnChange).toHaveBeenCalledTimes(1);
+        // Assert that GOOG option has been selected
+        let singleValue: any;
+        await waitForElement(
+            () =>
+                (singleValue = container.querySelector(
+                    '.react-select__single-value'
+                ))
+        );
+        expect(singleValue).toHaveTextContent(targetCompany);
     });
 });
