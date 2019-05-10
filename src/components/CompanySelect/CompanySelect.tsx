@@ -121,6 +121,8 @@ export const CompanySelect = () => {
             <AsyncSelect
                 value={company}
                 loadOptions={loadOptions}
+                className="company-select"
+                classNamePrefix="react-select"
                 getOptionValue={option => option.ticker}
                 getOptionLabel={option => `${option.ticker} - ${option.name}`}
                 components={{
