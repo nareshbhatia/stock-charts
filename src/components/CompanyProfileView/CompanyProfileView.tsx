@@ -22,9 +22,16 @@ export const CompanyProfileView = () => {
     const company = useContext(CompanyContext);
 
     // Company profile
-    const { profile } = useCompanyProfile(company ? company.ticker : undefined);
+    const { loading, error, profile } = useCompanyProfile(
+        company ? company.ticker : undefined
+    );
 
-    if (!profile) {
+    // Allow ErrorBoundary to handle errors
+    if (error) {
+        throw error;
+    }
+
+    if (loading) {
         return null;
     }
 
@@ -45,7 +52,7 @@ export const CompanyProfileView = () => {
         sector,
         volumeAverage,
         website
-    } = profile;
+    } = profile!;
 
     return (
         <React.Fragment>

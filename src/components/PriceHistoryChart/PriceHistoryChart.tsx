@@ -33,12 +33,17 @@ export const PriceHistoryChart = () => {
     const company = useContext(CompanyContext);
 
     // Price history
-    const { priceHistory } = usePriceHistory(
+    const { loading, error, priceHistory } = usePriceHistory(
         company ? company.ticker : undefined
     );
     const [period, setPeriod] = useState(TimePeriods.oneMonth.id);
 
-    if (!priceHistory) {
+    // Allow ErrorBoundary to handle errors
+    if (error) {
+        throw error;
+    }
+
+    if (loading) {
         return null;
     }
 
@@ -53,7 +58,7 @@ export const PriceHistoryChart = () => {
         return prices.filter(price => price.time >= start && price.time <= end);
     };
 
-    const prices = filterPrices(priceHistory.prices, period);
+    const prices = filterPrices(priceHistory!.prices, period);
 
     return (
         <React.Fragment>

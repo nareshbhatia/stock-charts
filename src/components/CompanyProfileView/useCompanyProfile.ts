@@ -4,13 +4,10 @@ import { CompanyService } from '../../services';
 
 export const useCompanyProfile = (
     ticker?: string
-): {
-    loading: boolean;
-    profile: CompanyProfile | undefined;
-} => {
+): { loading: boolean; error: any; profile?: CompanyProfile } => {
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState();
     const [profile, setProfile] = useState<CompanyProfile>();
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,10 +30,5 @@ export const useCompanyProfile = (
         fetchData();
     }, [ticker]);
 
-    // Allow ErrorBoundary to handle errors
-    if (error) {
-        throw error;
-    }
-
-    return { loading, profile };
+    return { loading, error, profile };
 };

@@ -4,13 +4,10 @@ import { CompanyService } from '../../services';
 
 export const usePriceHistory = (
     ticker?: string
-): {
-    loading: boolean;
-    priceHistory: PriceHistory | undefined;
-} => {
+): { loading: boolean; error: any; priceHistory?: PriceHistory } => {
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState();
     const [priceHistory, setPriceHistory] = useState<PriceHistory>();
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,10 +30,5 @@ export const usePriceHistory = (
         fetchData();
     }, [ticker]);
 
-    // Allow ErrorBoundary to handle errors
-    if (error) {
-        throw error;
-    }
-
-    return { loading, priceHistory };
+    return { loading, error, priceHistory };
 };

@@ -4,11 +4,12 @@ import { CompanyService } from '../../services';
 
 export const useCompanyList = (): {
     loading: boolean;
+    error: any;
     companies: Array<Company>;
 } => {
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState();
     const [companies, setCompanies] = useState<Array<Company>>([]);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,10 +33,5 @@ export const useCompanyList = (): {
         fetchData();
     }, []);
 
-    // Allow ErrorBoundary to handle errors
-    if (error) {
-        throw error;
-    }
-
-    return { loading, companies };
+    return { loading, error, companies };
 };

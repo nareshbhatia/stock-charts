@@ -27,7 +27,16 @@ export const CompanySelect = () => {
     const setCompany = useContext(SetCompanyContext);
 
     // List of all companies
-    const { companies } = useCompanyList();
+    const { loading, error, companies } = useCompanyList();
+
+    // Allow ErrorBoundary to handle errors
+    if (error) {
+        throw error;
+    }
+
+    if (loading) {
+        return null;
+    }
 
     const customStyles = {
         control: (provided: CSSProperties) => ({
