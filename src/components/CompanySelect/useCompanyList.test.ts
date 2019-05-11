@@ -1,5 +1,5 @@
 import { renderHook } from 'react-hooks-testing-library';
-import { CompanyService } from '../../services'
+import { CompanyService } from '../../services';
 import { useCompanyList } from './useCompanyList';
 
 const companiesSorted = [

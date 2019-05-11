@@ -6,7 +6,7 @@ import { Header } from './Header';
 jest.mock('../CompanySelect/CompanySelect', () => {
     return {
         CompanySelect: () => null
-    }
+    };
 });
 
 describe('<Header />', () => {

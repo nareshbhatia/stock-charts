@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { CompanyService } from './CompanyService';
-import { PriceHistory } from "../models";
+import { PriceHistory } from '../models';
 
 jest.mock('axios');
 
@@ -110,7 +110,7 @@ describe('CompanyService', () => {
                 {
                     time: 1369062260000,
                     close: 57.7589
-                },
+                }
             ]
         };
 
