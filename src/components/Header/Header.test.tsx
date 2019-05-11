@@ -10,7 +10,7 @@ jest.mock('../CompanySelect/CompanySelect', () => {
 });
 
 describe('<Header />', () => {
-    it('renders the application', async () => {
+    it('renders the application header', () => {
         const { container } = render(<Header />);
         expect(container).toHaveTextContent('Stock Charts');
     });
