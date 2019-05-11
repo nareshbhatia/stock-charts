@@ -1,6 +1,4 @@
 export * from './Attribute';
-export * from './Autosuggest';
-export * from './CompanyAutosuggest';
 export * from './CompanyProfileView';
 export * from './CompanySelect';
 export * from './Containers';
