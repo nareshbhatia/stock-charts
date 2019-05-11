@@ -1,4 +1,5 @@
 import { renderHook } from 'react-hooks-testing-library';
+import { CompanyService } from '../../services'
 import { useCompanyList } from './useCompanyList';
 
 const companiesSorted = [
@@ -57,6 +58,8 @@ describe('useCompanyList', () => {
     it('returns a sorted list of companies', () => {
         const { result } = renderHook(() => useCompanyList());
 
+        // TODO: fails, related to https://github.com/facebook/jest/pull/3209
+        expect(CompanyService.fetchCompanies).toBeDefined();
         expect(result.current.loading).toBe(true);
         expect(result.current.error).toBeUndefined();
         expect(result.current.companies).toEqual(companiesSorted);
