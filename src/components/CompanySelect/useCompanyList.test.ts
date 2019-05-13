@@ -1,5 +1,4 @@
 import { renderHook } from 'react-hooks-testing-library';
-import { CompanyService } from '../../services';
 import { useCompanyList } from './useCompanyList';
 
 const companiesSorted = [
@@ -14,6 +13,10 @@ const companiesSorted = [
     {
         ticker: 'GOOG',
         name: 'Alphabet Inc.'
+    },
+    {
+        ticker: 'GOOG',
+        name: 'Google Inc.'
     },
     {
         ticker: 'GOOGL',
@@ -39,6 +42,12 @@ jest.mock('../../services/CompanyService', () => {
             ticker: 'GOOG',
             name: 'Alphabet Inc.'
         },
+        // Test for duplicate tickers
+        // Not realistic, just to make sure app doesn't break
+        {
+            ticker: 'GOOG',
+            name: 'Google Inc.'
+        },
         {
             ticker: 'AAPL',
             name: 'Apple Inc.'
@@ -50,17 +59,28 @@ jest.mock('../../services/CompanyService', () => {
     ];
 
     return {
-        fetchCompanies: () => companiesUnsorted
+        CompanyService: {
+            fetchCompanies: () => companiesUnsorted
+        }
     };
 });
 
 describe('useCompanyList', () => {
-    it('returns a sorted list of companies', () => {
-        const { result } = renderHook(() => useCompanyList());
+    // See the following StackOverflow question for an explanation of this test
+    // https://stackoverflow.com/questions/56085458/testing-custom-hook-with-react-hooks-testing-library-throws-an-error
+    it('returns a sorted list of companies', async () => {
+        const { result, waitForNextUpdate } = renderHook(() =>
+            useCompanyList()
+        );
 
-        // TODO: fails, related to https://github.com/facebook/jest/pull/3209
-        expect(CompanyService.fetchCompanies).toBeDefined();
         expect(result.current.loading).toBe(true);
+        expect(result.current.error).toBeUndefined();
+        expect(result.current.companies).toEqual([]);
+
+        // Wait for the next hook update
+        await waitForNextUpdate();
+
+        expect(result.current.loading).toBe(false);
         expect(result.current.error).toBeUndefined();
         expect(result.current.companies).toEqual(companiesSorted);
     });
