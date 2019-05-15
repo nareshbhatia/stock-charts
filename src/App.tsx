@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react';
-import { ErrorBoundary, Loading } from './components';
+import { ErrorBoundary, Loading } from '@nareshbhatia/react-force';
 import { CompanyContext, SetCompanyContext } from './contexts';
 import { Company } from './models';
 import { HomePage } from './pages';

@@ -4,10 +4,10 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
+import { ViewVerticalContainer } from '@nareshbhatia/react-force';
 import classNames from 'classnames';
 import {
     CompanyProfileView,
-    FullHeightContainer,
     Header,
     PriceHistoryChart
 } from '../../components';
@@ -34,7 +34,7 @@ export const HomePage = () => {
     const chartPanelClass = classNames(classes.paper, classes.chartPanel);
 
     return (
-        <FullHeightContainer>
+        <ViewVerticalContainer>
             <Header />
 
             <Container maxWidth="lg" className={classes.container}>
@@ -51,6 +51,6 @@ export const HomePage = () => {
                     </Grid>
                 </Grid>
             </Container>
-        </FullHeightContainer>
+        </ViewVerticalContainer>
     );
 };
