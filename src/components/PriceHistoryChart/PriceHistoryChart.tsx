@@ -12,7 +12,7 @@ import { TimePeriodSelector } from '..';
 import { CompanyContext } from '../../contexts';
 import { StockPrice } from '../../models';
 import { formatTimeUtc, getDateRange, TimePeriods } from '../../utils';
-import { usePriceHistory } from './usePriceHstory';
+import { usePriceHistory } from './usePriceHistory';
 
 const CustomTick = ({ x, y, payload }: any) => (
     <g transform={`translate(${x},${y})`}>

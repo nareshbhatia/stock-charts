@@ -2,6 +2,8 @@
   "name": "stock-charts",
   "description": "Sample application to demonstrate best practices in testing",
   "version": "0.1.0",
+  "author": "Naresh Bhatia",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/nareshbhatia/stock-charts.git"
@@ -29,8 +31,8 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.7",
-    "@types/jest": "24.0.12",
-    "@types/node": "12.0.0",
+    "@types/jest": "24.0.13",
+    "@types/node": "12.0.2",
     "@types/numeral": "^0.0.25",
     "@types/react": "16.8.17",
     "@types/react-dom": "16.8.4",
