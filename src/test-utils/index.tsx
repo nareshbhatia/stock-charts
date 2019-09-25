@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/styles';
-import { render } from 'react-testing-library';
+import { render } from '@testing-library/react';
 import { theme } from '../components';
 import { CompanyContext, SetCompanyContext } from '../contexts';
 import { Company } from '../models';
@@ -29,7 +29,7 @@ const customRender = (ui: React.ReactElement<any>, options?: any) =>
     render(ui, { wrapper: TestWrapper, ...options });
 
 // re-export everything
-export * from 'react-testing-library';
+export * from '@testing-library/react';
 
 // override render method
 export { customRender as render };
